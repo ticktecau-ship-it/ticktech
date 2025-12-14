@@ -5,9 +5,12 @@ import Link from 'next/link'
 import styles from './Header.module.css'
 import Button from '../Button/Button'
 
+import { IconChevronDown } from '@tabler/icons-react'
+
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [mobileServicesOpen, setMobileServicesOpen] = useState(false)
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,7 +23,18 @@ export default function Header() {
     const navLinks = [
         { href: '/', label: 'Home' },
         { href: '/about', label: 'About' },
-        { href: '/services', label: 'Services' },
+        {
+            href: '/services',
+            label: 'Services',
+            subItems: [
+                { href: '/services/web-development', label: 'Web Development' },
+                { href: '/services/seo', label: 'SEO Services' },
+                { href: '/services/digital-marketing', label: 'Digital Marketing' },
+                { href: '/services/content-writing', label: 'Content Writing' },
+                { href: '/services/domain-hosting', label: 'Domain & Hosting' },
+                { href: '/services/branding', label: 'Branding & Logo' }
+            ]
+        },
         { href: '/portfolio', label: 'Portfolio' },
         { href: '/contact', label: 'Contact' },
     ]
@@ -37,14 +51,48 @@ export default function Header() {
 
                 <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.navOpen : ''}`}>
                     {navLinks.map((link) => (
-                        <Link
-                            key={link.href}
-                            href={link.href}
-                            className={styles.navLink}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {link.label}
-                        </Link>
+                        <div key={link.href} className={styles.navItem}>
+                            {link.subItems ? (
+                                <>
+                                    <Link
+                                        href={link.href}
+                                        className={styles.navLink}
+                                        onClick={(e) => {
+                                            if (window.innerWidth <= 768) {
+                                                e.preventDefault()
+                                                setMobileServicesOpen(!mobileServicesOpen)
+                                            } else {
+                                                setIsMobileMenuOpen(false)
+                                            }
+                                        }}
+                                        style={{ display: 'flex', alignItems: 'center' }}
+                                    >
+                                        {link.label}
+                                        <IconChevronDown size={14} className={styles.dropdownArrow} />
+                                    </Link>
+                                    <div className={`${styles.dropdown} ${mobileServicesOpen ? styles.mobileOpen : ''}`}>
+                                        {link.subItems.map((subItem) => (
+                                            <Link
+                                                key={subItem.href}
+                                                href={subItem.href}
+                                                className={styles.dropdownItem}
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                            >
+                                                {subItem.label}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </>
+                            ) : (
+                                <Link
+                                    href={link.href}
+                                    className={styles.navLink}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    {link.label}
+                                </Link>
+                            )}
+                        </div>
                     ))}
                     <div className={styles.navCta}>
                         <Button href="/contact" size="sm">

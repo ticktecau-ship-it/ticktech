@@ -15,6 +15,7 @@ export default function ServicesPage() {
         {
             icon: '💻',
             title: 'Web Development',
+            slug: 'web-development',
             description: 'Transform your vision into reality with custom websites and web applications built using the latest technologies.',
             features: [
                 'Responsive Design',
@@ -28,6 +29,7 @@ export default function ServicesPage() {
         {
             icon: '🔍',
             title: 'SEO Services',
+            slug: 'seo',
             description: 'Boost your online visibility and drive organic traffic with our comprehensive SEO strategies.',
             features: [
                 'Keyword Research',
@@ -41,6 +43,7 @@ export default function ServicesPage() {
         {
             icon: '📱',
             title: 'Digital Marketing',
+            slug: 'digital-marketing',
             description: 'Reach your target audience and maximize ROI with data-driven digital marketing campaigns.',
             features: [
                 'Social Media Marketing',
@@ -54,6 +57,7 @@ export default function ServicesPage() {
         {
             icon: '✍️',
             title: 'Content Writing',
+            slug: 'content-writing',
             description: 'Engage your audience with compelling, SEO-optimized content that drives results.',
             features: [
                 'Blog Posts & Articles',
@@ -67,6 +71,7 @@ export default function ServicesPage() {
         {
             icon: '🌐',
             title: 'Domain & Hosting',
+            slug: 'domain-hosting',
             description: 'Reliable domain registration and hosting solutions to keep your website running smoothly 24/7.',
             features: [
                 'Domain Registration',
@@ -80,6 +85,7 @@ export default function ServicesPage() {
         {
             icon: '🎨',
             title: 'Branding & Logo Design',
+            slug: 'branding',
             description: 'Create a memorable brand identity that resonates with your audience and stands out from the competition.',
             features: [
                 'Logo Design',
@@ -133,9 +139,14 @@ export default function ServicesPage() {
                                             ))}
                                         </ul>
                                     </div>
-                                    <Button href="/contact" variant="outline" className={styles.serviceButton}>
-                                        Get Started
-                                    </Button>
+                                    <div className={styles.serviceButtons}>
+                                        <Button href={`/services/${service.slug}`} variant="primary" className={styles.serviceButton}>
+                                            Learn More
+                                        </Button>
+                                        <Button href="/contact" variant="outline" className={styles.serviceButton}>
+                                            Get Started
+                                        </Button>
+                                    </div>
                                 </Card>
                             ))}
                         </div>

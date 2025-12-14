@@ -3,6 +3,7 @@ import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import Card from '@/components/Card/Card'
 import Button from '@/components/Button/Button'
+import { SparklesCore } from '@/components/ui/sparkles'
 import styles from './about.module.css'
 
 export const metadata: Metadata = {
@@ -41,12 +42,31 @@ export default function AboutPage() {
         { name: 'David Kim', role: 'Head of Marketing', emoji: '👨‍💼' }
     ]
 
+    const stats = [
+        { number: '500+', label: 'Projects Completed' },
+        { number: '250+', label: 'Happy Clients' },
+        { number: '50+', label: 'Team Members' },
+        { number: '15+', label: 'Years Experience' }
+    ]
+
     return (
         <>
             <Header />
             <main className={styles.main}>
                 {/* Hero Section */}
                 <section className={styles.hero}>
+                    <div className={styles.particles}></div>
+                    <div className={styles.sparklesBackground}>
+                        <SparklesCore
+                            background="transparent"
+                            minSize={0.4}
+                            size={1.2}
+                            density={80}
+                            className="w-full h-full"
+                            color="#00E5FF"
+                            speed={0.5}
+                        />
+                    </div>
                     <div className="container">
                         <div className={styles.heroContent}>
                             <h1>
@@ -61,12 +81,32 @@ export default function AboutPage() {
                     </div>
                 </section>
 
-                {/* Story Section */}
-                <section className="section">
+                {/* Stats Section */}
+                <section className={styles.stats}>
                     <div className="container">
+                        <div className={styles.statsGrid}>
+                            {stats.map((stat, index) => (
+                                <div key={index} className={styles.statCard}>
+                                    <div className={styles.statCardInner}>
+                                        <div className={styles.statGlow}></div>
+                                        <div className={styles.statNumber}>{stat.number}</div>
+                                        <div className={styles.statLabel}>{stat.label}</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Story Section */}
+                <section className={styles.storySection}>
+                    <div className="container">
+                        <div className={styles.sectionHeader}>
+                            <h2>Our <span className="text-gradient">Story</span></h2>
+                            <p>From humble beginnings to digital excellence</p>
+                        </div>
                         <div className={styles.story}>
                             <div className={styles.storyContent}>
-                                <h2>Our Story</h2>
                                 <p>
                                     Founded in 2009, TickTec Digital Solution began with a simple mission:
                                     to help businesses harness the power of digital technology to achieve
@@ -87,6 +127,7 @@ export default function AboutPage() {
                             </div>
                             <div className={styles.storyVisual}>
                                 <div className={styles.storyShape}></div>
+                                <div className={styles.storyOrb}></div>
                             </div>
                         </div>
                     </div>
@@ -94,6 +135,7 @@ export default function AboutPage() {
 
                 {/* Values Section */}
                 <section className={styles.valuesSection}>
+                    <div className={styles.particles}></div>
                     <div className="container">
                         <div className={styles.sectionHeader}>
                             <h2>Our <span className="text-gradient">Values</span></h2>
@@ -101,7 +143,7 @@ export default function AboutPage() {
                         </div>
                         <div className={styles.valuesGrid}>
                             {values.map((value, index) => (
-                                <Card key={index} variant="default">
+                                <Card key={index} variant="glass" className={styles.valueCard}>
                                     <div className={styles.valueIcon}>{value.icon}</div>
                                     <h3>{value.title}</h3>
                                     <p>{value.description}</p>
@@ -112,7 +154,7 @@ export default function AboutPage() {
                 </section>
 
                 {/* Team Section */}
-                <section className="section">
+                <section className={styles.teamSection}>
                     <div className="container">
                         <div className={styles.sectionHeader}>
                             <h2>Meet Our <span className="text-gradient">Team</span></h2>
@@ -120,7 +162,7 @@ export default function AboutPage() {
                         </div>
                         <div className={styles.teamGrid}>
                             {team.map((member, index) => (
-                                <Card key={index} variant="glass">
+                                <Card key={index} variant="glass" className={styles.teamCard}>
                                     <div className={styles.teamMember}>
                                         <div className={styles.teamAvatar}>{member.emoji}</div>
                                         <h4>{member.name}</h4>
@@ -134,13 +176,29 @@ export default function AboutPage() {
 
                 {/* CTA Section */}
                 <section className={styles.cta}>
+                    <div className={styles.sparklesBackground}>
+                        <SparklesCore
+                            background="transparent"
+                            minSize={0.4}
+                            size={1.2}
+                            density={80}
+                            className="w-full h-full"
+                            color="#00E5FF"
+                            speed={0.5}
+                        />
+                    </div>
                     <div className="container">
                         <div className={styles.ctaContent}>
                             <h2>Ready to Work Together?</h2>
                             <p>Let's discuss how we can help your business grow</p>
-                            <Button href="/contact" size="lg" variant="secondary">
-                                Get In Touch
-                            </Button>
+                            <div className={styles.ctaButtons}>
+                                <Button href="/contact" size="lg" variant="secondary">
+                                    Get In Touch
+                                </Button>
+                                <Button href="/portfolio" size="lg" variant="outline">
+                                    View Our Work
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </section>

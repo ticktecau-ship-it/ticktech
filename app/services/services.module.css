@@ -97,9 +97,14 @@
     flex-shrink: 0;
 }
 
-.serviceButton {
-    width: 100%;
+.serviceButtons {
+    display: flex;
+    gap: 0.75rem;
     margin-top: auto;
+}
+
+.serviceButton {
+    flex: 1;
 }
 
 .processSection {
