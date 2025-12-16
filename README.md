@@ -163,6 +163,44 @@ npm run build
 npm start
 ```
 
+## 🌐 Deployment
+
+### Deploy to Vercel (Recommended)
+
+1. **Push to GitHub**:
+```bash
+git add .
+git commit -m "Ready for deployment"
+git push origin main
+```
+
+2. **Deploy on Vercel**:
+   - Go to [vercel.com](https://vercel.com)
+   - Import your GitHub repository
+   - Vercel will auto-detect Next.js settings
+   - Add environment variables if needed:
+     - `NEXT_PUBLIC_SUPABASE_URL`
+     - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+     - `SUPABASE_SERVICE_ROLE_KEY`
+     - `RESEND_API_KEY`
+   - Click "Deploy"
+
+3. **SEO Files**:
+   - ✅ `robots.txt` - Auto-generated at `/robots.txt`
+   - ✅ `sitemap.xml` - Auto-generated at `/sitemap.xml`
+   - Both files are dynamically generated using Next.js 14 App Router
+
+### Environment Variables
+
+Create a `.env.local` file with:
+```env
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+RESEND_API_KEY=your_resend_api_key
+```
+
+
 ## 📱 Mobile Responsiveness
 
 All pages are fully responsive with breakpoints at:
