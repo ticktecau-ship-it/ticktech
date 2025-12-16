@@ -1,0 +1,53 @@
+.card {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-xl);
+    transition: all var(--transition-base);
+}
+
+.default {
+    background: var(--surface);
+    backdrop-filter: blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+}
+
+.glass {
+    background: var(--surface);
+    backdrop-filter: blur(var(--blur-glass-lg));
+    -webkit-backdrop-filter: blur(var(--blur-glass-lg));
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-glass);
+}
+
+.gradient {
+    background: var(--gradient-cta);
+    color: white;
+    box-shadow: var(--shadow-lg), var(--shadow-cyan-glow);
+}
+
+.gradient h3,
+.gradient h4,
+.gradient p {
+    color: white;
+}
+
+.hover:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.default.hover:hover {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-cyan-glow);
+}
+
+@media (max-width: 768px) {
+    .card {
+        padding: var(--spacing-md);
+    }
+
+    .hover:hover {
+        transform: translateY(-4px);
+    }
+}
