@@ -51,7 +51,7 @@
 
 .heroContent {
     display: grid;
-    grid-template-columns: 1.1fr 0.9fr;
+    grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
     position: relative;
@@ -113,10 +113,10 @@
     background: rgba(10, 15, 30, 0.9);
     border: 1px solid rgba(56, 189, 248, 0.3);
     /* Blue tinted border */
-    border-radius: 1.5rem;
-    padding: 0;
+    border-radius: 1.75rem;
+    padding: 3rem;
     width: 100%;
-    max-width: 480px;
+    max-width: 750px;
     box-shadow:
         0 0 0 1px rgba(16, 185, 129, 0.1),
         /* Inner glow hint */
@@ -548,6 +548,7 @@
 .featureCardWrapper {
     perspective: 1000px;
 }
+
 .benefitsListModern {
     display: flex;
     flex-direction: column;
@@ -567,7 +568,7 @@
 
 .benefitRow:hover {
     border-color: var(--accent);
-    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0) 100%);
 }
 
 .benefitNumber {
@@ -695,11 +696,10 @@
     left: 40px;
     right: 40px;
     height: 2px;
-    background: linear-gradient(90deg, 
-        rgba(139, 92, 246, 0.1) 0%, 
-        rgba(139, 92, 246, 0.5) 50%, 
-        rgba(139, 92, 246, 0.1) 100%
-    );
+    background: linear-gradient(90deg,
+            rgba(139, 92, 246, 0.1) 0%,
+            rgba(139, 92, 246, 0.5) 50%,
+            rgba(139, 92, 246, 0.1) 100%);
     z-index: 0;
 }
 

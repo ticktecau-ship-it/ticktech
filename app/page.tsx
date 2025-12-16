@@ -2,9 +2,10 @@ import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import Button from '@/components/Button/Button'
 import Card from '@/components/Card/Card'
-import { IconCloud } from '@/components/ui/interactive-icon-cloud'
+import TechStackCloud from '@/components/ui/TechStackCloud'
 import { SparklesCore, Sparkles } from '@/components/ui/sparkles'
 import { Compare } from '@/components/ui/compare'
+import { IconRocket, IconShield, IconHeadset, IconClock } from '@tabler/icons-react'
 import styles from './page.module.css'
 
 export default function Home() {
@@ -60,25 +61,25 @@ export default function Home() {
         'figma',
         'git',
         'github',
-        'visualstudiocode',
         'vercel',
         'firebase',
         'mongodb',
         'postgresql',
         'docker',
-        'amazonaws',
+        'awslambda',
         'googlecloud',
         'wordpress',
         'shopify',
         'wix',
-        'adobephotoshop',
-        'adobeillustrator',
         'canva',
         'slack',
         'trello',
         'notion',
         'googlechrome',
-        'safari'
+        'safari',
+        'python',
+        'php',
+        'mysql'
     ]
 
     return (
@@ -108,7 +109,7 @@ export default function Home() {
                                 </div>
                             </div>
                             <div className={styles.heroVisual}>
-                                <IconCloud iconSlugs={techStackSlugs} />
+                                <TechStackCloud iconSlugs={techStackSlugs} />
                             </div>
                         </div>
                     </div>
@@ -201,6 +202,74 @@ export default function Home() {
                             <Button href="/services" size="lg">
                                 Explore All Services
                             </Button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Why Choose Us Section */}
+                <section className={`section ${styles.whyChooseSection}`}>
+                    <div className="container">
+                        <div className={styles.whyChooseLayout}>
+                            <div className={styles.whyChooseIntro}>
+                                <p className={styles.eyebrow}>Why Choose Us</p>
+                                <h2>
+                                    We don&apos;t just build{' '}
+                                    <span className="text-gradient">websites</span> – we build
+                                    growth engines for your business.
+                                </h2>
+                                <p className={styles.whyIntroText}>
+                                    From strategy to launch, our team combines design, development and
+                                    marketing expertise to ship digital experiences that actually move
+                                    the needle for your brand.
+                                </p>
+                                <ul className={styles.whyHighlightList}>
+                                    <li>Senior talent on every project – no outsourcing</li>
+                                    <li>Transparent timelines, budgets and communication</li>
+                                    <li>Tech stack chosen around your goals, not trends</li>
+                                </ul>
+                            </div>
+
+                            <div className={styles.whyChooseGrid}>
+                                {[
+                                    {
+                                        icon: <IconRocket size={28} />,
+                                        label: 'Launch fast, iterate faster',
+                                        title: 'Speed without sacrificing quality',
+                                        description:
+                                            'Battle‑tested processes, reusable components and automation help us ship in weeks, not months.'
+                                    },
+                                    {
+                                        icon: <IconShield size={28} />,
+                                        label: 'Security by default',
+                                        title: 'Enterprise‑grade foundations',
+                                        description:
+                                            'Best practices for security, performance and SEO are baked into every project from day one.'
+                                    },
+                                    {
+                                        icon: <IconHeadset size={28} />,
+                                        label: 'Humans, not ticket bots',
+                                        title: 'Proactive partnership & support',
+                                        description:
+                                            'You get a dedicated team that knows your business and checks in regularly – not just when there’s a bug.'
+                                    },
+                                    {
+                                        icon: <IconClock size={28} />,
+                                        label: 'No missed deadlines',
+                                        title: 'On‑time, every time delivery',
+                                        description:
+                                            'Clear milestones, weekly updates and realistic planning keep your launch on schedule.'
+                                    }
+                                ].map((item, index) => (
+                                    <div key={index} className={styles.whyChooseCard}>
+                                        <div className={styles.whyBadge}>
+                                            <span className={styles.whyIcon}>{item.icon}</span>
+                                            <span>{item.label}</span>
+                                        </div>
+                                        <h3>{item.title}</h3>
+                                        <p>{item.description}</p>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -333,11 +402,11 @@ export default function Home() {
                 {/* FAQ Section */}
                 <section className={styles.faqSection}>
                     <div className="container">
-                        <div className={styles.sectionHeader} style={{ marginTop:"-72px"}}>
+                        <div className={styles.sectionHeader} style={{ marginTop: "-72px" }}>
                             <h2>
                                 <span className="text-gradient">FAQs</span>
                             </h2>
-                            
+
                         </div>
                         <div className={styles.faqContent}>
                             {[
@@ -404,66 +473,6 @@ export default function Home() {
                                 <Button href="/about" size="lg" variant="outline">
                                     Learn About Us
                                 </Button>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Before/After Comparison Section */}
-                <section className={styles.comparisonSection}>
-                    <div className="container">
-                        <div className={styles.sectionHeader}>
-                            <h2>
-                                See The <span className="text-gradient">Transformation</span>
-                            </h2>
-                            <p className={styles.sectionDescription}>
-                                Experience the dramatic difference our digital solutions make. Hover to compare before and after.
-                            </p>
-                        </div>
-
-                        <div className={styles.comparisonContent}>
-                            <div className={styles.comparisonGrid}>
-                                <div className={styles.comparisonItem}>
-                                    <h3 className={styles.comparisonTitle}>Website Redesign</h3>
-                                    <p className={styles.comparisonDescription}>Modern, responsive design that converts</p>
-                                    <Compare
-                                        firstImage="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=800&q=80"
-                                        secondImage="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80"
-                                        firstImageClassName="object-cover"
-                                        secondImageClassname="object-cover"
-                                        className={styles.compareWidget}
-                                        slideMode="hover"
-                                        initialSliderPercentage={50}
-                                    />
-                                </div>
-
-                                <div className={styles.comparisonItem}>
-                                    <h3 className={styles.comparisonTitle}>Brand Identity</h3>
-                                    <p className={styles.comparisonDescription}>Professional branding that stands out</p>
-                                    <Compare
-                                        firstImage="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&q=80"
-                                        secondImage="https://images.unsplash.com/photo-1558655146-9f40138edfeb?w=800&q=80"
-                                        firstImageClassName="object-cover"
-                                        secondImageClassname="object-cover"
-                                        className={styles.compareWidget}
-                                        slideMode="hover"
-                                        initialSliderPercentage={50}
-                                    />
-                                </div>
-
-                                <div className={styles.comparisonItem}>
-                                    <h3 className={styles.comparisonTitle}>Digital Marketing</h3>
-                                    <p className={styles.comparisonDescription}>Campaigns that drive real results</p>
-                                    <Compare
-                                        firstImage="https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=800&q=80"
-                                        secondImage="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80"
-                                        firstImageClassName="object-cover"
-                                        secondImageClassname="object-cover"
-                                        className={styles.compareWidget}
-                                        slideMode="hover"
-                                        initialSliderPercentage={50}
-                                    />
-                                </div>
                             </div>
                         </div>
                     </div>

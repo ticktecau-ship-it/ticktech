@@ -396,85 +396,89 @@ export default function ContentWritingContent() {
                     </div>
                 </section>
 
-                {/* Content Types Section */}
+                {/* Merged Specialties & Industries Section */}
                 <section className={commonStyles.techSection}>
                     <div className="container">
-                        <motion.div
-                            className={commonStyles.sectionHeader}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={fadeInUp}
-                        >
-                            <h2>Content <span className="text-gradient">Specialties</span></h2>
-                            <p>Expert writing across all industries and formats</p>
-                        </motion.div>
-                        <motion.div
-                            className={styles.techCloud}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={staggerContainer}
-                        >
-                            {[
-                                { icon: IconFileText, name: 'Technical Writing' },
-                                { icon: IconFileDescription, name: 'Case Studies' },
-                                { icon: IconBook2, name: 'White Papers' },
-                                { icon: IconNews, name: 'Press Releases' },
-                                { icon: IconWorld, name: 'Landing Pages' },
-                                { icon: IconBook2, name: 'E-books' },
-                                { icon: IconMicrophone, name: 'Video Scripts' },
-                                { icon: IconAd, name: 'Ad Copy' }
-                            ].map((item, index) => (
+                        <div className={styles.splitSectionContainer}>
+                            {/* Left Column: Specialties */}
+                            <div className={styles.splitColumn}>
                                 <motion.div
-                                    key={index}
-                                    className={styles.techCloudItem}
-                                    variants={fadeInUp}
-                                >
-                                    <item.icon className={styles.techCloudIcon} size={48} stroke={1.5} />
-                                    <span className={styles.techCloudLabel}>{item.name}</span>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    </div>
-                </section>
-
-                {/* Industries Section */}
-                <section className="section">
-                    <div className="container">
-                        <motion.div
-                            className={commonStyles.sectionHeader}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={fadeInUp}
-                        >
-                            <h2>Industries We <span className="text-gradient">Serve</span></h2>
-                            <p>Specialized content for diverse sectors</p>
-                        </motion.div>
-
-                        <div className={styles.industriesContainer}>
-                            {[
-                                { icon: <IconBuildingStore size={20} />, name: 'E-commerce' },
-                                { icon: <IconDeviceDesktopAnalytics size={20} />, name: 'SaaS' },
-                                { icon: <IconBriefcase size={20} />, name: 'Finance' },
-                                { icon: <IconStethoscope size={20} />, name: 'Healthcare' },
-                                { icon: <IconHome size={20} />, name: 'Real Estate' },
-                                { icon: <IconRocket size={20} />, name: 'Startups' }
-                            ].map((industry, index) => (
-                                <motion.div
-                                    key={index}
-                                    className={styles.industryPill}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    initial="hidden"
+                                    whileInView="visible"
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                                    whileHover={{ scale: 1.05 }}
+                                    variants={fadeInUp}
+                                    style={{ marginBottom: '2rem', textAlign: 'left' }}
                                 >
-                                    <div className={styles.industryPillIcon}>{industry.icon}</div>
-                                    <h3>{industry.name}</h3>
+                                    <h2>Content <span className="text-gradient">Specialties</span></h2>
+                                    <p className={commonStyles.sectionDescription} style={{ margin: 0 }}>Expert writing across all formats</p>
                                 </motion.div>
-                            ))}
+                                <motion.div
+                                    className={styles.techCloud}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    variants={staggerContainer}
+                                    style={{ justifyContent: 'flex-start', gap: '2rem', padding: '1rem 0' }}
+                                >
+                                    {[
+                                        { icon: IconFileText, name: 'Technical Writing' },
+                                        { icon: IconFileDescription, name: 'Case Studies' },
+                                        { icon: IconBook2, name: 'White Papers' },
+                                        { icon: IconNews, name: 'Press Releases' },
+                                        { icon: IconWorld, name: 'Landing Pages' },
+                                        { icon: IconBook2, name: 'E-books' },
+                                        { icon: IconMicrophone, name: 'Video Scripts' },
+                                        { icon: IconAd, name: 'Ad Copy' }
+                                    ].map((item, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className={styles.techCloudItem}
+                                            variants={fadeInUp}
+                                        >
+                                            <item.icon className={styles.techCloudIcon} size={40} stroke={1.5} />
+                                            {/* <span className={styles.techCloudLabel}>{item.name}</span> */}
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
+                            </div>
+
+                            {/* Right Column: Industries */}
+                            <div className={styles.splitColumn}>
+                                <motion.div
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    variants={fadeInUp}
+                                    style={{ marginBottom: '2rem', textAlign: 'left' }}
+                                >
+                                    <h2>Industries We <span className="text-gradient">Serve</span></h2>
+                                    <p className={commonStyles.sectionDescription} style={{ margin: 0 }}>Specialized content for diverse sectors</p>
+                                </motion.div>
+
+                                <div className={styles.industriesContainer} style={{ justifyContent: 'flex-start' }}>
+                                    {[
+                                        { icon: <IconBuildingStore size={20} />, name: 'E-commerce' },
+                                        { icon: <IconDeviceDesktopAnalytics size={20} />, name: 'SaaS' },
+                                        { icon: <IconBriefcase size={20} />, name: 'Finance' },
+                                        { icon: <IconStethoscope size={20} />, name: 'Healthcare' },
+                                        { icon: <IconHome size={20} />, name: 'Real Estate' },
+                                        { icon: <IconRocket size={20} />, name: 'Startups' }
+                                    ].map((industry, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className={styles.industryPill}
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                                            whileHover={{ scale: 1.05 }}
+                                        >
+                                            <div className={styles.industryPillIcon}>{industry.icon}</div>
+                                            <h3>{industry.name}</h3>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { motion, Variants, AnimatePresence } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import Card from '@/components/Card/Card'
@@ -175,38 +175,8 @@ const SeoGrowthEffect = () => {
                 </div>
             </div>
 
-            {/* Floating Keyword Chips */}
+            {/* Floating Keyword Chips - Removed */}
             <div className={styles.keywordsContainer}>
-                <AnimatePresence>
-                    {phase === 'optimizing' && (
-                        <motion.div
-                            key="k1"
-                            initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
-                            className={`${styles.keywordChip} ${styles.k1}`}
-                        >
-                            <IconTarget size={14} /> Keywords Found
-                        </motion.div>
-                    )}
-                    {phase === 'optimizing' && (
-                        <motion.div
-                            key="k2"
-                            initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }}
-                            className={`${styles.keywordChip} ${styles.k2}`}
-                        >
-                            <IconLink size={14} /> Backlinks Added
-                        </motion.div>
-                    )}
-                    {phase === 'optimizing' && (
-                        <motion.div
-                            key="k3"
-                            initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
-                            className={`${styles.keywordChip} ${styles.k3}`}
-                        >
-                            <IconChartBar size={14} /> Traffic Rising
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-
                 <div className={styles.statusText}>
                     {phase === 'analyzing' && "Running Site Audit..."}
                     {phase === 'optimizing' && "Optimizing Content..."}

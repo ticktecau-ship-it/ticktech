@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import { promises as fs } from 'fs'
+import path from 'path'
 import Header from '@/components/Header/Header'
 import Footer from '@/components/Footer/Footer'
 import Card from '@/components/Card/Card'
@@ -10,53 +12,30 @@ export const metadata: Metadata = {
     description: 'Explore our portfolio of successful digital projects and case studies showcasing our expertise in web development, SEO, and digital marketing.',
 }
 
-export default function PortfolioPage() {
-    const projects = [
-        {
-            title: 'E-Commerce Platform Redesign',
-            category: 'Web Development',
-            description: 'Complete redesign and development of a modern e-commerce platform with improved UX and 150% increase in conversions.',
-            tags: ['Next.js', 'E-commerce', 'UX Design'],
-            gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-        },
-        {
-            title: 'SEO Campaign Success',
-            category: 'SEO',
-            description: 'Comprehensive SEO strategy that increased organic traffic by 300% and improved search rankings for 50+ keywords.',
-            tags: ['SEO', 'Content Strategy', 'Analytics'],
-            gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)'
-        },
-        {
-            title: 'Brand Identity Refresh',
-            category: 'Branding',
-            description: 'Complete brand refresh including logo design, visual identity, and brand guidelines for a tech startup.',
-            tags: ['Branding', 'Logo Design', 'Visual Identity'],
-            gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
-        },
-        {
-            title: 'Social Media Growth',
-            category: 'Digital Marketing',
-            description: 'Strategic social media campaign that grew followers by 500% and increased engagement by 400% in 6 months.',
-            tags: ['Social Media', 'Content Marketing', 'Analytics'],
-            gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
-        },
-        {
-            title: 'SaaS Product Launch',
-            category: 'Web Development',
-            description: 'Full-stack development of a SaaS platform with user authentication, payment integration, and analytics dashboard.',
-            tags: ['React', 'Node.js', 'SaaS'],
-            gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
-        },
-        {
-            title: 'Content Marketing Strategy',
-            category: 'Content Writing',
-            description: 'Developed and executed content strategy that generated 200+ high-quality leads through blog content and whitepapers.',
-            tags: ['Content Strategy', 'SEO Writing', 'Lead Generation'],
-            gradient: 'linear-gradient(135deg, #30cfd0 0%, #330867 100%)'
+async function getProjects() {
+    try {
+        const dbPath = path.join(process.cwd(), 'data', 'projects.json')
+        // Check if file exists to prevent crash on first run
+        try {
+            await fs.access(dbPath)
+        } catch {
+            return []
         }
-    ]
 
-    const categories = ['All', 'Web Development', 'SEO', 'Digital Marketing', 'Branding', 'Content Writing']
+        const data = await fs.readFile(dbPath, 'utf-8')
+        return JSON.parse(data)
+    } catch (error) {
+        console.error('Failed to load projects:', error)
+        return []
+    }
+}
+
+export default async function PortfolioPage() {
+    const projects = await getProjects()
+
+    // Dynamic categories + 'All'
+    const uniqueCategories = Array.from(new Set(projects.map((p: any) => p.category)))
+    const categories = ['All', ...uniqueCategories] as string[]
 
     return (
         <>
@@ -94,7 +73,7 @@ export default function PortfolioPage() {
                 <section className="section-sm">
                     <div className="container">
                         <div className={styles.projectsGrid}>
-                            {projects.map((project, index) => (
+                            {projects.map((project: any, index: number) => (
                                 <Card key={index} variant="default" className={styles.projectCard}>
                                     <div
                                         className={styles.projectHeader}
@@ -106,7 +85,7 @@ export default function PortfolioPage() {
                                         <h3>{project.title}</h3>
                                         <p>{project.description}</p>
                                         <div className={styles.tags}>
-                                            {project.tags.map((tag, idx) => (
+                                            {project.tags.map((tag: string, idx: number) => (
                                                 <span key={idx} className={styles.tag}>{tag}</span>
                                             ))}
                                         </div>

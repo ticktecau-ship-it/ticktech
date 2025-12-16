@@ -26,20 +26,55 @@ export default function ContactForm() {
         e.preventDefault()
         setStatus('submitting')
 
-        // Simulate form submission
-        setTimeout(() => {
-            console.log('Form submitted:', formData)
-            setStatus('success')
-            setFormData({ name: '', email: '', phone: '', service: '', message: '' })
+        try {
+            const response = await fetch('/api/send-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    type: 'contact',
+                    to: 'ticktec.au@gmail.com',
+                    name: formData.name,
+                    email: formData.email,
+                    phone: formData.phone,
+                    service: formData.service,
+                    message: `Service: ${formData.service}\n\n${formData.message}`,
+                }),
+            })
+
+            const data = await response.json()
+
+            if (response.ok) {
+                setStatus('success')
+                setFormData({ name: '', email: '', phone: '', service: '', message: '' })
+
+                setTimeout(() => {
+                    setStatus('idle')
+                }, 5000)
+            } else {
+                console.error('Email error:', data)
+                setStatus('error')
+
+                setTimeout(() => {
+                    setStatus('idle')
+                }, 5000)
+            }
+        } catch (error) {
+            console.error('Form submission error:', error)
+            setStatus('error')
 
             setTimeout(() => {
                 setStatus('idle')
-            }, 3000)
-        }, 1000)
+            }, 5000)
+        }
     }
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form
+            className={styles.form}
+            onSubmit={handleSubmit}
+        >
             <div className={styles.formGroup}>
                 <label htmlFor="name" className={styles.label}>
                     Full Name *
@@ -128,13 +163,13 @@ export default function ContactForm() {
 
             {status === 'success' && (
                 <div className={styles.successMessage}>
-                    ✓ Thank you! We'll get back to you within 24 hours.
+                    ✓ Thank you!
                 </div>
             )}
 
             {status === 'error' && (
                 <div className={styles.errorMessage}>
-                    ✗ Something went wrong. Please try again.
+                    ✗ Failed to send message. Please try again or email us directly at ticktec.au@gmail.com
                 </div>
             )}
 

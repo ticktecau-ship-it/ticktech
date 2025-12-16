@@ -52,6 +52,15 @@
     padding-right: 3rem;
 }
 
+.select option {
+    color: var(--text-primary);
+    background: var(--background);
+}
+
+.select option[value=""] {
+    color: var(--text-tertiary);
+}
+
 .textarea {
     resize: vertical;
     min-height: 120px;

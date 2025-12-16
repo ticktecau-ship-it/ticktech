@@ -416,85 +416,89 @@ export default function DigitalMarketingContent() {
                     </div>
                 </section>
 
-                {/* Platforms Section */}
+                {/* Merged Platforms & Industries Section */}
                 <section className={commonStyles.techSection}>
                     <div className="container">
-                        <motion.div
-                            className={commonStyles.sectionHeader}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={fadeInUp}
-                        >
-                            <h2>Platforms We <span className="text-gradient">Master</span></h2>
-                            <p>Expert campaigns across all major digital channels</p>
-                        </motion.div>
-                        <motion.div
-                            className={styles.techCloud}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={staggerContainer}
-                        >
-                            {[
-                                { icon: IconBrandGoogle, name: 'Google Ads' },
-                                { icon: IconBrandFacebook, name: 'Facebook' },
-                                { icon: IconBrandInstagram, name: 'Instagram' },
-                                { icon: IconBrandLinkedin, name: 'LinkedIn' },
-                                { icon: IconBrandTwitter, name: 'Twitter/X' },
-                                { icon: IconBrandTiktok, name: 'TikTok' },
-                                { icon: IconBrandYoutube, name: 'YouTube' },
-                                { icon: IconBrandPinterest, name: 'Pinterest' }
-                            ].map((tech, index) => (
+                        <div className={styles.splitSectionContainer}>
+                            {/* Left Column: Platforms */}
+                            <div className={styles.splitColumn}>
                                 <motion.div
-                                    key={index}
-                                    className={styles.techCloudItem}
-                                    variants={fadeInUp}
-                                >
-                                    <tech.icon className={styles.techCloudIcon} size={48} stroke={1.5} />
-                                    <span className={styles.techCloudLabel}>{tech.name}</span>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    </div>
-                </section>
-
-                {/* Industries Section */}
-                <section className="section">
-                    <div className="container">
-                        <motion.div
-                            className={commonStyles.sectionHeader}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={fadeInUp}
-                        >
-                            <h2>Industries We <span className="text-gradient">Serve</span></h2>
-                            <p>Specialized strategies for diverse sectors</p>
-                        </motion.div>
-
-                        <div className={styles.industriesContainer}>
-                            {[
-                                { icon: <IconBuildingStore size={20} />, name: 'E-commerce & Retail' },
-                                { icon: <IconDeviceDesktop size={20} />, name: 'SaaS & Tech' },
-                                { icon: <IconBriefcase size={20} />, name: 'Professional Services' },
-                                { icon: <IconStethoscope size={20} />, name: 'Healthcare' },
-                                { icon: <IconHome size={20} />, name: 'Real Estate' },
-                                { icon: <IconSchool size={20} />, name: 'Education' }
-                            ].map((industry, index) => (
-                                <motion.div
-                                    key={index}
-                                    className={styles.industryPill}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    initial="hidden"
+                                    whileInView="visible"
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                                    whileHover={{ scale: 1.05 }}
+                                    variants={fadeInUp}
+                                    style={{ marginBottom: '2rem', textAlign: 'left' }}
                                 >
-                                    <div className={styles.industryPillIcon}>{industry.icon}</div>
-                                    <h3>{industry.name}</h3>
+                                    <h2>Platforms We <span className="text-gradient">Master</span></h2>
+                                    <p className={commonStyles.sectionDescription} style={{ margin: 0 }}>Expert campaigns across major channels</p>
                                 </motion.div>
-                            ))}
+                                <motion.div
+                                    className={styles.techCloud}
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    variants={staggerContainer}
+                                    style={{ justifyContent: 'flex-start', gap: '2rem', padding: '1rem 0' }}
+                                >
+                                    {[
+                                        { icon: IconBrandGoogle, name: 'Google Ads' },
+                                        { icon: IconBrandFacebook, name: 'Facebook' },
+                                        { icon: IconBrandInstagram, name: 'Instagram' },
+                                        { icon: IconBrandLinkedin, name: 'LinkedIn' },
+                                        { icon: IconBrandTwitter, name: 'Twitter/X' },
+                                        { icon: IconBrandTiktok, name: 'TikTok' },
+                                        { icon: IconBrandYoutube, name: 'YouTube' },
+                                        { icon: IconBrandPinterest, name: 'Pinterest' }
+                                    ].map((tech, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className={styles.techCloudItem}
+                                            variants={fadeInUp}
+                                        >
+                                            <tech.icon className={styles.techCloudIcon} size={40} stroke={1.5} />
+                                            {/* <span className={styles.techCloudLabel}>{tech.name}</span> */}
+                                        </motion.div>
+                                    ))}
+                                </motion.div>
+                            </div>
+
+                            {/* Right Column: Industries */}
+                            <div className={styles.splitColumn}>
+                                <motion.div
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    variants={fadeInUp}
+                                    style={{ marginBottom: '2rem', textAlign: 'left' }}
+                                >
+                                    <h2>Industries We <span className="text-gradient">Serve</span></h2>
+                                    <p className={commonStyles.sectionDescription} style={{ margin: 0 }}>Specialized strategies for diverse sectors</p>
+                                </motion.div>
+
+                                <div className={styles.industriesContainer} style={{ justifyContent: 'flex-start' }}>
+                                    {[
+                                        { icon: <IconBuildingStore size={20} />, name: 'E-commerce & Retail' },
+                                        { icon: <IconDeviceDesktop size={20} />, name: 'SaaS & Tech' },
+                                        { icon: <IconBriefcase size={20} />, name: 'Professional Services' },
+                                        { icon: <IconStethoscope size={20} />, name: 'Healthcare' },
+                                        { icon: <IconHome size={20} />, name: 'Real Estate' },
+                                        { icon: <IconSchool size={20} />, name: 'Education' }
+                                    ].map((industry, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className={styles.industryPill}
+                                            initial={{ opacity: 0, scale: 0.9 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ duration: 0.3, delay: index * 0.05 }}
+                                            whileHover={{ scale: 1.05 }}
+                                        >
+                                            <div className={styles.industryPillIcon}>{industry.icon}</div>
+                                            <h3>{industry.name}</h3>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>

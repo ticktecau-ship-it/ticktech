@@ -370,9 +370,8 @@ export default function WebDevContent() {
                     </div>
                 </section>
 
-                {/* Technologies Section */}
-                <section className={commonStyles.techSection}>
-                    <div className="container">
+                <section className={commonStyles.techSection} style={{ overflow: 'hidden' }}>
+                    <div className="container" style={{ position: 'relative', zIndex: 5 }}>
                         <motion.div
                             className={commonStyles.sectionHeader}
                             initial="hidden"
@@ -380,41 +379,80 @@ export default function WebDevContent() {
                             viewport={{ once: true }}
                             variants={fadeInUp}
                         >
-                            <h2>Technologies We <span className="text-gradient">Use</span></h2>
-                            <p>Modern tech stack for cutting-edge solutions</p>
+                            <motion.h2
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 15 }}
+                            >
+                                Technologies <span className="text-gradient" style={{ display: 'inline-block', filter: 'drop-shadow(0 0 10px rgba(0,229,255,0.5))' }}>Powerhouse</span>
+                            </motion.h2>
+                            <p>Next-gen tech stack for blazing fast performance</p>
                         </motion.div>
                         <motion.div
                             className={styles.techCloud}
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: true }}
-                            variants={staggerContainer}
                         >
                             {[
-                                { icon: IconBrandReact, name: 'React' },
-                                { icon: IconBrandNextjs, name: 'Next.js' },
-                                { icon: IconBrandTypescript, name: 'TypeScript' },
-                                { icon: IconBrandNodejs, name: 'Node.js' },
-                                { icon: IconBrandWordpress, name: 'WordPress' },
-                                { icon: IconShoppingBag, name: 'Shopify' },
-                                { icon: IconBrandMongodb, name: 'MongoDB' },
-                                { icon: IconDatabase, name: 'PostgreSQL' }
+                                { icon: IconBrandReact, name: 'React', color: '#61DAFB' },
+                                { icon: IconBrandNextjs, name: 'Next.js', color: '#ffffff' },
+                                { icon: IconBrandTypescript, name: 'TypeScript', color: '#3178C6' },
+                                { icon: IconBrandNodejs, name: 'Node.js', color: '#339933' },
+                                { icon: IconBrandWordpress, name: 'WordPress', color: '#21759B' },
+                                { icon: IconShoppingBag, name: 'Shopify', color: '#96BF48' },
+                                { icon: IconBrandMongodb, name: 'MongoDB', color: '#47A248' },
+                                { icon: IconDatabase, name: 'PostgreSQL', color: '#4169E1' }
                             ].map((tech, index) => (
                                 <motion.div
                                     key={index}
                                     className={styles.techCloudItem}
-                                    variants={scaleIn}
+                                    variants={{
+                                        hidden: { opacity: 0, scale: 0 },
+                                        visible: { opacity: 1, scale: 1, transition: { type: "spring", bounce: 0.5, delay: index * 0.1 } }
+                                    }}
+                                    animate={{
+                                        y: [0, -15, 0],
+                                        filter: ["drop-shadow(0 0 0px rgba(0,0,0,0))", "drop-shadow(0 10px 10px rgba(0,0,0,0.3))", "drop-shadow(0 0 0px rgba(0,0,0,0))"]
+                                    }}
+                                    transition={{
+                                        y: { repeat: Infinity, duration: 3 + (index % 3), ease: "easeInOut", delay: index * 0.2 },
+                                        filter: { repeat: Infinity, duration: 3 + (index % 3), ease: "easeInOut", delay: index * 0.2 }
+                                    }}
+                                    whileHover={{
+                                        scale: 1.3,
+                                        zIndex: 10,
+                                        rotate: [0, -5, 5, 0],
+                                        filter: `drop-shadow(0 0 20px ${tech.color})`,
+                                        transition: {
+                                            scale: { type: "spring", stiffness: 400, damping: 10 },
+                                            rotate: { duration: 0.4, ease: "easeInOut" }
+                                        }
+                                    }}
+                                    style={{
+                                        background: 'rgba(255,255,255,0.03)',
+                                        border: '1px solid rgba(255,255,255,0.05)',
+                                        borderRadius: '20px',
+                                        aspectRatio: '1',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        backdropFilter: 'blur(5px)'
+                                    }}
                                 >
-                                    <tech.icon className={styles.techCloudIcon} size={48} stroke={1.5} />
-                                    <span className={styles.techCloudLabel}>{tech.name}</span>
+                                    <tech.icon size={50} stroke={1.5} color={tech.color} />
+                                    <span style={{ marginTop: '0.8rem', fontWeight: 600, fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)' }}>{tech.name}</span>
                                 </motion.div>
                             ))}
                         </motion.div>
                     </div>
                 </section>
 
-                {/* Process Section */}
-                <section className="section" style={{ background: 'var(--background-secondary)' }}>
+                <section className="section" style={{ background: 'var(--background-secondary)', position: 'relative', overflow: 'hidden' }}>
+                    {/* Background decoration */}
+                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%', height: '100%', opacity: 0.03, background: 'radial-gradient(circle, var(--accent) 0%, transparent 70%)', pointerEvents: 'none' }} />
+
                     <div className="container">
                         <motion.div
                             className={commonStyles.sectionHeader}
@@ -423,55 +461,135 @@ export default function WebDevContent() {
                             viewport={{ once: true }}
                             variants={fadeInUp}
                         >
-                            <h2>How We <span className="text-gradient">Work</span></h2>
-                            <p>Our proven process to deliver excellence</p>
+                            <h2>How We <span className="text-gradient">Execute</span></h2>
+                            <p>A flawless journey from concept to launch</p>
                         </motion.div>
 
-                        <div className={styles.processStepsContainer}>
-                            {[
-                                {
-                                    icon: <IconSearch size={28} />,
-                                    title: 'Discovery',
-                                    desc: 'Creating the roadmap.'
-                                },
-                                {
-                                    icon: <IconPalette size={28} />,
-                                    title: 'Design',
-                                    desc: 'Crafting the visual experience.'
-                                },
-                                {
-                                    icon: <IconCode size={28} />,
-                                    title: 'Develop',
-                                    desc: 'Building robust code.'
-                                },
-                                {
-                                    icon: <IconRocket size={28} />,
-                                    title: 'Launch',
-                                    desc: 'Lift off to success.'
-                                }
-                            ].map((step, index) => (
-                                <motion.div
-                                    key={index}
-                                    className={styles.processStep}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.5, delay: index * 0.2 }}
-                                >
-                                    <div className={styles.processStepIcon}>
-                                        {step.icon}
-                                    </div>
-                                    <div className={styles.processStepContent}>
-                                        <h3>{step.title}</h3>
-                                        <p>{step.desc}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
+                        <div style={{ marginTop: '4rem', position: 'relative' }}>
+                            {/* Connecting Line */}
+                            <motion.div
+                                style={{
+                                    position: 'absolute',
+                                    left: '50%',
+                                    top: '0',
+                                    bottom: '0',
+                                    width: '4px',
+                                    background: 'linear-gradient(180deg, var(--accent) 0%, var(--secondary) 100%)',
+                                    transform: 'translateX(-50%)',
+                                    borderRadius: '4px',
+                                    boxShadow: '0 0 15px var(--accent)'
+                                }}
+                                initial={{ height: 0 }}
+                                whileInView={{ height: '100%' }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 1.5, ease: "easeInOut" }}
+                            />
+
+                            <div className={styles.processStepsContainer} style={{ display: 'flex', flexDirection: 'column', gap: '4rem' }}>
+                                {[
+                                    {
+                                        icon: <IconSearch size={32} />,
+                                        title: 'Discovery',
+                                        desc: 'We dive deep into your business goals, audience, and requirements to chart the perfect course.',
+                                        color: '#00E5FF',
+                                        align: 'left'
+                                    },
+                                    {
+                                        icon: <IconPalette size={32} />,
+                                        title: 'Design',
+                                        desc: 'Structuring intuitive user journeys and crafting pixel-perfect, modern UI designs.',
+                                        color: '#FBBF24',
+                                        align: 'right'
+                                    },
+                                    {
+                                        icon: <IconCode size={32} />,
+                                        title: 'Development',
+                                        desc: 'Writing clean, scalable code with the latest frameworks to bring designs to life.',
+                                        color: '#22C55E',
+                                        align: 'left'
+                                    },
+                                    {
+                                        icon: <IconRocket size={32} />,
+                                        title: 'Launch & Grow',
+                                        desc: 'Rigorous testing followed by a smooth deployment and post-launch optimization.',
+                                        color: '#FF4081',
+                                        align: 'right'
+                                    }
+                                ].map((step, index) => (
+                                    <motion.div
+                                        key={index}
+                                        initial={{ opacity: 0, x: step.align === 'left' ? -100 : 100 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true, margin: "-100px" }}
+                                        transition={{ type: "spring", stiffness: 100, damping: 20, delay: index * 0.2 }}
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: step.align === 'left' ? 'flex-end' : 'flex-start',
+                                            position: 'relative',
+                                            width: '50%',
+                                            alignSelf: step.align === 'left' ? 'flex-start' : 'flex-end',
+                                            paddingRight: step.align === 'left' ? '3rem' : '0',
+                                            paddingLeft: step.align === 'right' ? '3rem' : '0'
+                                        }}
+                                    >
+                                        {/* Center Dot */}
+                                        <motion.div
+                                            style={{
+                                                position: 'absolute',
+                                                top: '50%',
+                                                [step.align === 'left' ? 'right' : 'left']: '-12px',
+                                                width: '24px',
+                                                height: '24px',
+                                                borderRadius: '50%',
+                                                background: step.color,
+                                                transform: 'translateY(-50%)',
+                                                boxShadow: `0 0 20px ${step.color}`,
+                                                zIndex: 2
+                                            }}
+                                            whileInView={{ scale: [0, 1.5, 1] }}
+                                            transition={{ duration: 0.5, delay: index * 0.2 + 0.5 }}
+                                        />
+
+                                        <motion.div
+                                            whileHover={{
+                                                scale: 1.05,
+                                                rotateY: step.align === 'left' ? 5 : -5,
+                                                borderColor: step.color,
+                                                background: `linear-gradient(${step.align === 'left' ? '90deg' : '-90deg'}, rgba(255,255,255,0.05), rgba(255,255,255,0.01))`
+                                            }}
+                                            style={{
+                                                background: 'var(--surface)',
+                                                border: '1px solid var(--border)',
+                                                borderRadius: '24px',
+                                                padding: '2rem',
+                                                width: '100%',
+                                                position: 'relative',
+                                                overflow: 'hidden',
+                                                transformStyle: 'preserve-3d',
+                                                perspective: '1000px'
+                                            }}
+                                        >
+                                            <div className={styles.processStepIcon} style={{
+                                                background: `${step.color}20`,
+                                                color: step.color,
+                                                borderRadius: '16px',
+                                                padding: '1rem',
+                                                display: 'inline-flex',
+                                                marginBottom: '1rem',
+                                                boxShadow: `0 0 30px ${step.color}10`
+                                            }}>
+                                                {step.icon}
+                                            </div>
+                                            <h3 style={{ fontSize: '1.75rem', marginBottom: '0.75rem' }}>{step.title}</h3>
+                                            <p style={{ color: 'var(--text-secondary)', fontSize: '1.1rem', lineHeight: '1.6' }}>{step.desc}</p>
+                                        </motion.div>
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                {/* Industries Section */}
                 <section className="section">
                     <div className="container">
                         <motion.div
@@ -481,30 +599,81 @@ export default function WebDevContent() {
                             viewport={{ once: true }}
                             variants={fadeInUp}
                         >
-                            <h2>Industries We <span className="text-gradient">Serve</span></h2>
-                            <p>Specialized web solutions for diverse sectors</p>
+                            <h2>Industries We <span className="text-gradient">Revolutionize</span></h2>
+                            <p>Tailored digital solutions for every sector</p>
                         </motion.div>
 
-                        <div className={styles.industriesContainer}>
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                            gap: '2rem',
+                            padding: '2rem 0'
+                        }}>
                             {[
-                                { icon: <IconBuildingStore size={20} />, name: 'E-commerce & Retail' },
-                                { icon: <IconStethoscope size={20} />, name: 'Healthcare & Medical' },
-                                { icon: <IconHome size={20} />, name: 'Real Estate & Property' },
-                                { icon: <IconSchool size={20} />, name: 'Education & LMS' },
-                                { icon: <IconRocket size={20} />, name: 'Startups & SaaS' },
-                                { icon: <IconShoppingBag size={20} />, name: 'Fashion & Lifestyle' }
+                                { icon: <IconBuildingStore size={40} />, name: 'E-commerce', color: '#F59E0B' },
+                                { icon: <IconStethoscope size={40} />, name: 'Healthcare', color: '#EF4444' },
+                                { icon: <IconHome size={40} />, name: 'Real Estate', color: '#3B82F6' },
+                                { icon: <IconSchool size={40} />, name: 'Education', color: '#10B981' },
+                                { icon: <IconRocket size={40} />, name: 'Startups', color: '#8B5CF6' },
+                                { icon: <IconShoppingBag size={40} />, name: 'Fashion', color: '#EC4899' }
                             ].map((industry, index) => (
                                 <motion.div
                                     key={index}
-                                    className={styles.industryPill}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    initial={{ opacity: 0, scale: 0.8, rotateX: -90 }}
+                                    whileInView={{ opacity: 1, scale: 1, rotateX: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                                    whileHover={{ scale: 1.05 }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 100,
+                                        damping: 20,
+                                        delay: index * 0.1
+                                    }}
+                                    whileHover={{
+                                        scale: 1.05,
+                                        y: -10,
+                                        boxShadow: `0 20px 40px -10px ${industry.color}50`
+                                    }}
+                                    style={{
+                                        background: 'rgba(255,255,255,0.02)',
+                                        borderRadius: '24px',
+                                        padding: '2.5rem 1.5rem',
+                                        textAlign: 'center',
+                                        border: '1px solid rgba(255,255,255,0.1)',
+                                        position: 'relative',
+                                        overflow: 'hidden',
+                                        cursor: 'pointer'
+                                    }}
                                 >
-                                    <div className={styles.industryPillIcon}>{industry.icon}</div>
-                                    <h3>{industry.name}</h3>
+                                    <motion.div
+                                        style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            width: '100%',
+                                            height: '4px',
+                                            background: industry.color,
+                                            scaleX: 0
+                                        }}
+                                        whileHover={{ scaleX: 1 }}
+                                        transition={{ duration: 0.3 }}
+                                    />
+
+                                    <div style={{
+                                        background: `linear-gradient(135deg, ${industry.color}20, transparent)`,
+                                        width: '80px',
+                                        height: '80px',
+                                        borderRadius: '50%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        margin: '0 auto 1.5rem',
+                                        color: industry.color,
+                                        boxShadow: `0 0 30px ${industry.color}30`
+                                    }}>
+                                        {industry.icon}
+                                    </div>
+                                    <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>{industry.name}</h3>
+                                    <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem' }}>Specialized solutions driven by data and results.</p>
                                 </motion.div>
                             ))}
                         </div>
@@ -662,62 +831,7 @@ export default function WebDevContent() {
                     </div>
                 </section>
 
-                {/* NEW SECTION 2: Circular Progress Metrics - NO CARDS */}
-                <section className="section" style={{ background: 'var(--background-secondary)' }}>
-                    <div className="container">
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={fadeInUp}
-                            style={{ textAlign: 'center', marginBottom: '4rem' }}
-                        >
-                            <h2>Performance <span className="text-gradient">Excellence</span></h2>
-                            <p>Metrics that matter for your success</p>
-                        </motion.div>
 
-                        <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center', flexWrap: 'wrap', gap: '3rem' }}>
-                            {[
-                                { label: 'Speed', value: 98, color: '#10b981', icon: '⚡' },
-                                { label: 'SEO', value: 100, color: '#8b5cf6', icon: '🎯' },
-                                { label: 'Security', value: 95, color: '#3b82f6', icon: '🔒' },
-                                { label: 'UX Score', value: 97, color: '#f59e0b', icon: '✨' }
-                            ].map((metric, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, scale: 0 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.15, type: 'spring', stiffness: 200 }}
-                                    style={{ position: 'relative', width: '200px', height: '200px' }}
-                                >
-                                    <svg width="200" height="200" style={{ transform: 'rotate(-90deg)' }}>
-                                        <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="12" />
-                                        <motion.circle
-                                            cx="100"
-                                            cy="100"
-                                            r="85"
-                                            fill="none"
-                                            stroke={metric.color}
-                                            strokeWidth="12"
-                                            strokeLinecap="round"
-                                            strokeDasharray={`${2 * Math.PI * 85}`}
-                                            initial={{ strokeDashoffset: 2 * Math.PI * 85 }}
-                                            whileInView={{ strokeDashoffset: (2 * Math.PI * 85) * (1 - metric.value / 100) }}
-                                            viewport={{ once: true }}
-                                            transition={{ duration: 1.5, delay: index * 0.15 }}
-                                        />
-                                    </svg>
-                                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
-                                        <div style={{ fontSize: '2.5rem' }}>{metric.icon}</div>
-                                        <div style={{ fontSize: '2rem', fontWeight: 'bold', color: metric.color }}>{metric.value}%</div>
-                                        <div style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>{metric.label}</div>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
 
                 {/* NEW SECTION 3: Diagonal Split Comparison - NO CARDS */}
                 <section className="section" style={{ background: 'var(--background-primary)', overflow: 'hidden' }}>
@@ -873,117 +987,116 @@ export default function WebDevContent() {
                     </div>
                 </section>
 
-                {/* NEW SECTION 5: Hexagonal Security Grid - NO CARDS */}
-                <section className="section" style={{ background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)', color: 'white' }}>
+                {/* NEW MERGED SECTION: Performance & Security - Split Layout on Desktop */}
+                <section className="section" style={{ background: 'var(--background-secondary)', overflow: 'hidden' }}>
                     <div className="container">
-                        <motion.div
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={fadeInUp}
-                            style={{ textAlign: 'center', marginBottom: '4rem' }}
-                        >
-                            <h2 style={{ color: 'white' }}>Security <span style={{ color: '#22d3ee' }}>Shield</span></h2>
-                            <p style={{ color: 'rgba(255,255,255,0.8)' }}>Multi-layered protection for your peace of mind</p>
-                        </motion.div>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
-                            {[
-                                { icon: '🔒', title: 'SSL/TLS', desc: 'Encrypted connections', color: '#22d3ee' },
-                                { icon: '🛡️', title: 'Firewall', desc: 'DDoS protection', color: '#a78bfa' },
-                                { icon: '🔐', title: 'Data Lock', desc: 'AES-256 encryption', color: '#34d399' },
-                                { icon: '👁️', title: 'Monitor', desc: '24/7 surveillance', color: '#fbbf24' },
-                                { icon: '🔄', title: 'Backup', desc: 'Auto recovery', color: '#fb7185' },
-                                { icon: '✅', title: 'Compliant', desc: 'GDPR ready', color: '#60a5fa' }
-                            ].map((feature, index) => (
+                        <div className={styles.splitSectionContainer}> {/* New container for grid layout */}
+                            {/* Left Column: Performance */}
+                            <div className={styles.splitColumn}>
                                 <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, scale: 0, rotate: -180 }}
-                                    whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                                    initial="hidden"
+                                    whileInView="visible"
                                     viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1, type: 'spring', stiffness: 150 }}
-                                    whileHover={{ y: -10, boxShadow: `0 20px 40px ${feature.color}40` }}
-                                    style={{
-                                        background: `linear-gradient(135deg, ${feature.color}20 0%, ${feature.color}10 100%)`,
-                                        border: `2px solid ${feature.color}`,
-                                        borderRadius: '20px',
-                                        padding: '2rem',
-                                        textAlign: 'center',
-                                        position: 'relative',
-                                        overflow: 'hidden'
-                                    }}
+                                    variants={fadeInUp}
+                                    style={{ textAlign: 'left', marginBottom: '3rem' }}
                                 >
-                                    <div style={{
-                                        position: 'absolute',
-                                        top: '-50%',
-                                        right: '-50%',
-                                        width: '200%',
-                                        height: '200%',
-                                        background: `radial-gradient(circle, ${feature.color}15 0%, transparent 70%)`,
-                                        pointerEvents: 'none'
-                                    }}></div>
-
-                                    <div style={{ fontSize: '3.5rem', marginBottom: '1rem', position: 'relative', zIndex: 1 }}>{feature.icon}</div>
-                                    <h4 style={{ fontSize: '1.25rem', marginBottom: '0.5rem', color: feature.color, position: 'relative', zIndex: 1 }}>{feature.title}</h4>
-                                    <p style={{ margin: 0, color: 'rgba(255,255,255,0.7)', fontSize: '0.9rem', position: 'relative', zIndex: 1 }}>{feature.desc}</p>
+                                    <h2>Performance <span className="text-gradient">Excellence</span></h2>
+                                    <p>Metrics that matter for your success</p>
                                 </motion.div>
-                            ))}
+
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem' }}>
+                                    {[
+                                        { label: 'Speed', value: 98, color: '#10b981', icon: '⚡' },
+                                        { label: 'SEO', value: 100, color: '#8b5cf6', icon: '🎯' },
+                                        { label: 'Security', value: 95, color: '#3b82f6', icon: '🔒' },
+                                        { label: 'UX Score', value: 97, color: '#f59e0b', icon: '✨' }
+                                    ].map((metric, index) => (
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            whileInView={{ opacity: 1, scale: 1 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.15, type: 'spring', stiffness: 200 }}
+                                            style={{ position: 'relative', width: '100%', aspectRatio: '1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                        >
+                                            <svg width="100%" height="100%" viewBox="0 0 200 200" style={{ transform: 'rotate(-90deg)' }}>
+                                                <circle cx="100" cy="100" r="85" fill="none" stroke="rgba(0,0,0,0.1)" strokeWidth="12" />
+                                                <motion.circle
+                                                    cx="100"
+                                                    cy="100"
+                                                    r="85"
+                                                    fill="none"
+                                                    stroke={metric.color}
+                                                    strokeWidth="12"
+                                                    strokeLinecap="round"
+                                                    strokeDasharray={`${2 * Math.PI * 85}`}
+                                                    initial={{ strokeDashoffset: 2 * Math.PI * 85 }}
+                                                    whileInView={{ strokeDashoffset: (2 * Math.PI * 85) * (1 - metric.value / 100) }}
+                                                    viewport={{ once: true }}
+                                                    transition={{ duration: 1.5, delay: index * 0.15 }}
+                                                />
+                                            </svg>
+                                            <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
+                                                <div style={{ fontSize: '2rem' }}>{metric.icon}</div>
+                                                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: metric.color }}>{metric.value}%</div>
+                                                <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{metric.label}</div>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Right Column: Security */}
+                            <div className={styles.splitColumn}>
+                                <motion.div
+                                    initial="hidden"
+                                    whileInView="visible"
+                                    viewport={{ once: true }}
+                                    variants={fadeInUp}
+                                    style={{ textAlign: 'left', marginBottom: '3rem' }}
+                                >
+                                    <h2 style={{ color: 'var(--text-primary)' }}>Security <span style={{ color: '#22d3ee' }}>Shield</span></h2>
+                                    <p style={{ color: 'var(--text-secondary)' }}>Multi-layered protection peace of mind</p>
+                                </motion.div>
+
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.5rem' }}>
+                                    {[
+                                        { icon: '🔒', title: 'SSL/TLS', desc: 'Encrypted connections', color: '#22d3ee' },
+                                        { icon: '🛡️', title: 'Firewall', desc: 'DDoS protection', color: '#a78bfa' },
+                                        { icon: '🔐', title: 'Data Lock', desc: 'AES-256 encryption', color: '#34d399' },
+                                        { icon: '👁️', title: 'Monitor', desc: '24/7 surveillance', color: '#fbbf24' },
+                                        { icon: '🔄', title: 'Backup', desc: 'Auto recovery', color: '#fb7185' },
+                                        { icon: '✅', title: 'Compliant', desc: 'GDPR ready', color: '#60a5fa' }
+                                    ].map((feature, index) => (
+                                        <motion.div
+                                            key={index}
+                                            initial={{ opacity: 0, scale: 0, rotate: -180 }}
+                                            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.1, type: 'spring', stiffness: 150 }}
+                                            whileHover={{ y: -5, boxShadow: `0 10px 20px ${feature.color}20` }}
+                                            style={{
+                                                background: `linear-gradient(135deg, ${feature.color}15 0%, ${feature.color}05 100%)`,
+                                                border: `1px solid ${feature.color}`,
+                                                borderRadius: '16px',
+                                                padding: '1.5rem',
+                                                textAlign: 'center',
+                                                position: 'relative',
+                                                overflow: 'hidden'
+                                            }}
+                                        >
+                                            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{feature.icon}</div>
+                                            <h4 style={{ fontSize: '1rem', marginBottom: '0.25rem', color: feature.color, fontWeight: 'bold' }}>{feature.title}</h4>
+                                            <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '0.75rem' }}>{feature.desc}</p>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
 
-                {/* FAQ Section */}
-                <section className={commonStyles.faqSection}>
-                    <div className="container">
-                        <motion.div
-                            className={commonStyles.sectionHeader}
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={fadeInUp}
-                        >
-                            <h2 style={{ color: 'white' }}>Live <span style={{ color: '#fbbf24' }}>Code Preview</span></h2>
-                            <p style={{ color: 'rgba(255,255,255,0.9)' }}>See how we transform ideas into interactive experiences</p>
-                        </motion.div>
 
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            style={{
-                                background: 'rgba(255,255,255,0.1)',
-                                backdropFilter: 'blur(10px)',
-                                borderRadius: '20px',
-                                padding: '2rem',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                marginTop: '3rem'
-                            }}
-                        >
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
-                                <div style={{ background: '#1e1e1e', borderRadius: '12px', padding: '1.5rem' }}>
-                                    <div style={{ display: 'flex', gap: '8px', marginBottom: '1rem' }}>
-                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ff5f56' }}></div>
-                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ffbd2e' }}></div>
-                                        <div style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#27c93f' }}></div>
-                                    </div>
-                                    <pre style={{ color: '#a9b7c6', fontSize: '0.9rem', margin: 0, fontFamily: 'monospace' }}>
-                                        {`<div className="hero">
-  <h1>Welcome</h1>
-  <button>Get Started</button>
-</div>`}
-                                    </pre>
-                                </div>
-                                <div style={{ background: 'white', borderRadius: '12px', padding: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <div style={{ textAlign: 'center' }}>
-                                        <h3 style={{ fontSize: '2rem', marginBottom: '1rem', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Welcome</h3>
-                                        <button style={{ padding: '12px 32px', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', border: 'none', borderRadius: '8px', fontSize: '1rem', cursor: 'pointer' }}>Get Started</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </div>
-                </section>
 
                 {/* FAQ Section */}
                 <section className={commonStyles.faqSection}>
