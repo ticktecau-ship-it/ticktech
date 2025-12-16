@@ -1,7 +1,9 @@
+import Link from 'next/link'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import styles from './dashboard.module.css'
 import AdminSidebar from '../components/AdminSidebar'
+import { supabaseAdmin } from '@/lib/supabase'
 
 export default async function Dashboard() {
     const cookieStore = cookies()
@@ -11,16 +13,20 @@ export default async function Dashboard() {
         redirect('/admin/login')
     }
 
-    // Load messages from local JSON file
-    let messages = []
+    // Load messages from Supabase
+    let messages: any[] = []
     try {
-        const fs = await import('fs')
-        const path = await import('path')
-        const dbPath = path.join(process.cwd(), 'data', 'messages.json')
+        if (supabaseAdmin) {
+            const { data, error } = await supabaseAdmin
+                .from('messages')
+                .select('*')
+                .order('created_at', { ascending: false })
 
-        if (fs.existsSync(dbPath)) {
-            const fileContent = fs.readFileSync(dbPath, 'utf-8')
-            messages = JSON.parse(fileContent)
+            if (error) {
+                console.error('Dashboard messages error:', error)
+            } else {
+                messages = data || []
+            }
         }
     } catch (error) {
         console.error('Error reading messages:', error)
@@ -29,7 +35,7 @@ export default async function Dashboard() {
     // Calculate stats
     const totalMessages = messages.length
     const today = new Date().toISOString().split('T')[0]
-    const newToday = messages.filter((m: any) => m.created_at.startsWith(today)).length
+    const newToday = messages.filter((m: any) => (m.created_at || '').startsWith(today)).length
     const pendingQuotes = messages.filter((m: any) => m.type === 'quote').length
     const contactMessages = messages.filter((m: any) => m.type === 'contact').length
 
@@ -119,9 +125,9 @@ export default async function Dashboard() {
 
                     {/* Quick Actions */}
                     <div className={styles.quickActions}>
-                        <h2 className={styles.sectionTitle}>Quick Actions</h2>
+                        <h2 className={styles.sectionTitle} style={{ borderTop: 'none', paddingTop: 0 }}>Quick Actions</h2>
                         <div className={styles.actionsGrid}>
-                            <button className={styles.actionCard}>
+                            <Link href="/admin/messages" className={styles.actionCard}>
                                 <div className={styles.actionIcon}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -132,22 +138,23 @@ export default async function Dashboard() {
                                     <div className={styles.actionTitle}>View Messages</div>
                                     <div className={styles.actionDesc}>Check all inquiries</div>
                                 </div>
-                            </button>
+                            </Link>
 
-                            <button className={styles.actionCard}>
+                            <Link href="/admin/portfolio" className={styles.actionCard}>
                                 <div className={styles.actionIcon}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                        <line x1="12" y1="1" x2="12" y2="23" />
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                        <line x1="3" y1="9" x2="21" y2="9" />
+                                        <line x1="9" y1="21" x2="9" y2="9" />
                                     </svg>
                                 </div>
                                 <div className={styles.actionContent}>
-                                    <div className={styles.actionTitle}>Generate Quote</div>
-                                    <div className={styles.actionDesc}>Create new quote</div>
+                                    <div className={styles.actionTitle}>Portfolio</div>
+                                    <div className={styles.actionDesc}>Manage projects</div>
                                 </div>
-                            </button>
+                            </Link>
 
-                            <button className={styles.actionCard}>
+                            <Link href="/admin/settings" className={styles.actionCard}>
                                 <div className={styles.actionIcon}>
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                         <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
@@ -157,13 +164,14 @@ export default async function Dashboard() {
                                     <div className={styles.actionTitle}>Settings</div>
                                     <div className={styles.actionDesc}>Configure system</div>
                                 </div>
-                            </button>
+                            </Link>
                         </div>
                     </div>
 
                     {/* Recent Messages */}
-                    <h2 className={styles.sectionTitle}>Recent Messages</h2>
-                    <div className={styles.recentMessages}>
+                    <div style={{ marginTop: '2rem' }}>
+                        <h2 className={styles.sectionTitle}>Recent Messages</h2>
+                        <div className={styles.recentMessages}>
                         {recentMessages.length === 0 ? (
                             <div className={styles.emptyState}>
                                 <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -227,9 +235,9 @@ export default async function Dashboard() {
                                                             View / Delete
                                                         </a>
                                                         <a
-                                                            href={`mailto:${msg.email}`}
+                                                            href={`mailto:${msg.email}?subject=Re: ${msg.type === 'quote' ? 'Quote Request' : 'Contact Inquiry'}&body=Hi ${msg.name},%0D%0A%0D%0A`}
                                                             className={styles.iconBtn}
-                                                            title="Reply"
+                                                            title={`Reply to ${msg.email}`}
                                                         >
                                                             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                                                 <polyline points="9 11 12 14 22 4" />
@@ -244,6 +252,7 @@ export default async function Dashboard() {
                                 </table>
                             </div>
                         )}
+                        </div>
                     </div>
                 </main>
             </div>

@@ -3,6 +3,9 @@ import { redirect } from 'next/navigation'
 import styles from './messages.module.css'
 import AdminSidebar from '../components/AdminSidebar'
 import MessagesClient from './MessagesClient'
+import { supabaseAdmin } from '@/lib/supabase'
+
+export const dynamic = 'force-dynamic'
 
 export default async function MessagesPage() {
     const cookieStore = cookies()
@@ -12,22 +15,26 @@ export default async function MessagesPage() {
         redirect('/admin/login')
     }
 
-    // Load messages from local JSON file
-    let messages = []
+    // Load messages from Supabase
+    let messages: any[] = []
     try {
-        const fs = await import('fs')
-        const path = await import('path')
-        const dbPath = path.join(process.cwd(), 'data', 'messages.json')
+        if (supabaseAdmin) {
+            const { data, error } = await supabaseAdmin
+                .from('messages')
+                .select('*')
+                .order('created_at', { ascending: false })
 
-        if (fs.existsSync(dbPath)) {
-            const fileContent = fs.readFileSync(dbPath, 'utf-8')
-            messages = JSON.parse(fileContent)
+            if (error) {
+                console.error('Admin messages error:', error)
+            } else {
+                messages = data || []
+            }
         }
     } catch (error) {
         console.error('Error reading messages:', error)
     }
 
-    // Sort messages by date (newest first)
+    // Already ordered by created_at desc, but keep sort to be safe
     messages.sort((a: any, b: any) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 
     return (

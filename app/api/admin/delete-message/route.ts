@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { supabaseAdmin } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
     try {
@@ -14,6 +15,13 @@ export async function POST(request: NextRequest) {
             )
         }
 
+        if (!supabaseAdmin) {
+            return NextResponse.json(
+                { error: 'Supabase not configured' },
+                { status: 500 }
+            )
+        }
+
         const { messageId } = await request.json()
 
         if (!messageId) {
@@ -23,33 +31,18 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        // Read messages file
-        const fs = await import('fs')
-        const path = await import('path')
-        const dbPath = path.join(process.cwd(), 'data', 'messages.json')
+        const { error } = await supabaseAdmin
+            .from('messages')
+            .delete()
+            .eq('id', messageId)
 
-        if (!fs.existsSync(dbPath)) {
+        if (error) {
+            console.error('Delete message Supabase error:', error)
             return NextResponse.json(
-                { error: 'Messages file not found' },
-                { status: 404 }
+                { error: 'Failed to delete message' },
+                { status: 500 }
             )
         }
-
-        const fileContent = fs.readFileSync(dbPath, 'utf-8')
-        let messages = JSON.parse(fileContent)
-
-        // Filter out the message to delete
-        const filteredMessages = messages.filter((msg: any) => msg.id !== messageId)
-
-        if (filteredMessages.length === messages.length) {
-            return NextResponse.json(
-                { error: 'Message not found' },
-                { status: 404 }
-            )
-        }
-
-        // Write back to file
-        fs.writeFileSync(dbPath, JSON.stringify(filteredMessages, null, 2))
 
         return NextResponse.json(
             { success: true, message: 'Message deleted successfully' },

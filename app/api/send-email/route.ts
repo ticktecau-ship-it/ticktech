@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { resend, EMAIL_CONFIG, emailTemplates } from '@/lib/resend';
+import { supabaseAdmin } from '@/lib/supabase';
 
 export async function POST(request: NextRequest) {
     try {
+        // Check if Resend is configured
+        if (!process.env.RESEND_API_KEY) {
+            console.error('RESEND_API_KEY is missing from environment variables');
+            return NextResponse.json(
+                { error: 'Email service not configured. Please set RESEND_API_KEY in environment variables.' },
+                { status: 500 }
+            );
+        }
+
         const body = await request.json();
         const { type, to, ...data } = body;
 
@@ -83,37 +93,38 @@ export async function POST(request: NextRequest) {
             console.warn('User confirmation email error:', userEmailResult.error);
         }
 
-        // Save to local JSON file (simulating a database)
-        try {
-            const fs = await import('fs');
-            const path = await import('path');
+        // Save message to Supabase instead of local JSON
+        if (supabaseAdmin) {
+            try {
+                const insertData: any = {
+                    type,
+                    name: data.name,
+                    email: data.email,
+                    message: data.message,
+                    status: 'new',
+                };
 
-            const dbPath = path.join(process.cwd(), 'data', 'messages.json');
-            let messages = [];
+                // Add optional fields only if they exist
+                if (data.phone) insertData.phone = data.phone;
+                if (data.service) insertData.service = data.service;
 
-            if (fs.existsSync(dbPath)) {
-                const fileContent = fs.readFileSync(dbPath, 'utf-8');
-                try {
-                    messages = JSON.parse(fileContent);
-                } catch (e) {
-                    messages = [];
+                const { error, data: insertedData } = await supabaseAdmin
+                    .from('messages')
+                    .insert(insertData)
+                    .select();
+
+                if (error) {
+                    console.error('Failed to save message to Supabase:', error);
+                    console.error('Supabase error details:', JSON.stringify(error, null, 2));
+                } else {
+                    console.log('Message saved to Supabase:', insertedData);
                 }
+            } catch (dbError) {
+                console.error('Failed to save message to Supabase (exception):', dbError);
+                // Don't fail the request if saving fails, email is more important
             }
-
-            const newMessage = {
-                id: Date.now().toString(),
-                created_at: new Date().toISOString(),
-                type,
-                ...data,
-                status: 'new'
-            };
-
-            messages.unshift(newMessage); // Add to beginning
-            fs.writeFileSync(dbPath, JSON.stringify(messages, null, 2));
-
-        } catch (dbError) {
-            console.error('Failed to save message to local DB:', dbError);
-            // Don't fail the request if saving fails, email is more important
+        } else {
+            console.warn('supabaseAdmin is null - message not saved to database');
         }
 
         return NextResponse.json(

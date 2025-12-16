@@ -20,14 +20,18 @@
     animation: fadeIn 0.6s ease-out;
 }
 
+.content > * {
+    margin-bottom: 0;
+}
+
 /* Header Section */
 .header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2.5rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: 2px solid var(--glass-border);
 }
 
 .pageTitle {
@@ -87,7 +91,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
 }
 
 .statCard {
@@ -207,7 +211,9 @@
 
 /* Quick Actions */
 .quickActions {
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
 }
 
 .actionsGrid {
@@ -282,6 +288,8 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--glass-border);
 }
 
 .sectionTitle::before {
@@ -301,6 +309,7 @@
     border-radius: var(--radius-xl);
     overflow: hidden;
     box-shadow: var(--shadow-glass);
+    margin-top: 0.5rem;
 }
 
 .tableWrapper {

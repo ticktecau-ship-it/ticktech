@@ -191,13 +191,17 @@ export default function MessagesClient({ initialMessages }: { initialMessages: M
                                 </div>
 
                                 <div className={styles.messageActions}>
-                                    <button className={styles.actionBtn}>
+                                    <a
+                                        href={`mailto:${msg.email}?subject=Re: ${msg.type === 'quote' ? 'Quote Request' : 'Contact Inquiry'}&body=Hi ${msg.name},%0D%0A%0D%0A`}
+                                        className={styles.actionBtn}
+                                        title={`Reply to ${msg.email}`}
+                                    >
                                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                                             <polyline points="9 11 12 14 22 4" />
                                             <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
                                         </svg>
                                         Reply
-                                    </button>
+                                    </a>
                                     <button
                                         className={`${styles.actionBtn} ${styles.deleteBtn}`}
                                         onClick={() => handleDelete(msg.id)}

@@ -393,6 +393,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: all var(--transition-base);
+    text-decoration: none;
 }
 
 .actionBtn:hover {

@@ -1,51 +1,64 @@
 import { NextResponse } from 'next/server'
-import { promises as fs } from 'fs'
-import path from 'path'
-
-const dbPath = path.join(process.cwd(), 'data', 'projects.json')
-
-// Helper to read DB
-async function getProjects() {
-    try {
-        const data = await fs.readFile(dbPath, 'utf-8')
-        return JSON.parse(data)
-    } catch (error) {
-        return []
-    }
-}
+import { supabaseAdmin } from '@/lib/supabase'
 
 // GET: Fetch all projects
 export async function GET() {
-    const projects = await getProjects()
-    return NextResponse.json(projects)
+    if (!supabaseAdmin) {
+        return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 })
+    }
+
+    const { data, error } = await supabaseAdmin
+        .from('projects')
+        .select('*')
+        .order('created_at', { ascending: false })
+
+    if (error) {
+        console.error('GET /api/projects error:', error)
+        return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
+    }
+
+    return NextResponse.json(data || [])
 }
 
 // POST: Add new project
 export async function POST(request: Request) {
+    if (!supabaseAdmin) {
+        return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 })
+    }
+
     try {
         const body = await request.json()
-        const projects = await getProjects()
 
-        // Simple ID generation
-        const newProject = {
-            id: Date.now().toString(),
-            ...body
+        const { data, error } = await supabaseAdmin
+            .from('projects')
+            .insert({
+                title: body.title,
+                category: body.category,
+                description: body.description,
+                tags: body.tags,
+                gradient: body.gradient,
+            })
+            .select('*')
+            .single()
+
+        if (error) {
+            console.error('POST /api/projects error:', error)
+            return NextResponse.json({ error: 'Failed to create project' }, { status: 500 })
         }
 
-        // Add to beginning
-        projects.unshift(newProject)
-
-        // Save
-        await fs.writeFile(dbPath, JSON.stringify(projects, null, 2))
-
-        return NextResponse.json(newProject)
+        return NextResponse.json(data)
     } catch (error) {
+        console.error('POST /api/projects exception:', error)
         return NextResponse.json({ error: 'Failed to create project' }, { status: 500 })
     }
 }
 
 // DELETE: Remove project
 export async function DELETE(request: Request) {
+    if (!supabaseAdmin) {
+        return NextResponse.json({ error: 'Supabase not configured' }, { status: 500 })
+    }
+
     try {
         const { searchParams } = new URL(request.url)
         const id = searchParams.get('id')
@@ -54,13 +67,19 @@ export async function DELETE(request: Request) {
             return NextResponse.json({ error: 'ID required' }, { status: 400 })
         }
 
-        let projects = await getProjects()
-        projects = projects.filter((p: any) => p.id !== id)
+        const { error } = await supabaseAdmin
+            .from('projects')
+            .delete()
+            .eq('id', id)
 
-        await fs.writeFile(dbPath, JSON.stringify(projects, null, 2))
+        if (error) {
+            console.error('DELETE /api/projects error:', error)
+            return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 })
+        }
 
         return NextResponse.json({ success: true })
     } catch (error) {
+        console.error('DELETE /api/projects exception:', error)
         return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 })
     }
 }
