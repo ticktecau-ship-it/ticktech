@@ -27,6 +27,17 @@ export const metadata: Metadata = {
         index: true,
         follow: true,
     },
+    icons: {
+        icon: [
+            { url: '/logo/Ticktec icon.png' },
+            { url: '/logo/Ticktec icon.png', sizes: '32x32', type: 'image/png' },
+            { url: '/logo/Ticktec icon.png', sizes: '192x192', type: 'image/png' },
+            { url: '/logo/Ticktec icon.png', sizes: '512x512', type: 'image/png' },
+        ],
+        apple: [
+            { url: '/logo/Ticktec icon.png' },
+        ],
+    },
 }
 
 export default function RootLayout({
