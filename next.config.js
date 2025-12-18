@@ -10,6 +10,17 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  // Webpack configuration
+  webpack: (config, { dev, isServer }) => {
+    // Disable webpack cache serialization warnings in development
+    if (dev) {
+      config.infrastructureLogging = {
+        level: 'error',
+      };
+    }
+
+    return config;
+  },
 }
 
 module.exports = nextConfig
