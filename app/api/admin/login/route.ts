@@ -8,7 +8,7 @@ export async function POST(request: Request) {
 
         // In a real app, these should be in .env
         // For now, we'll use these credentials
-        const adminEmail = process.env.ADMIN_EMAIL || 'ticktec.au@gmail.com'
+        const adminEmail = process.env.ADMIN_EMAIL || 'team@ticktec.com.au'
         const adminPassword = process.env.ADMIN_PASSWORD || 'admin123'
 
         if (email === adminEmail && password === adminPassword) {

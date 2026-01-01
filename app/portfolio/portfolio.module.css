@@ -53,7 +53,8 @@
 }
 
 .filterButton:hover,
-.filterButton:first-child {
+.filterButton:first-child,
+.activeFilter {
     background: var(--primary);
     border-color: var(--primary);
     color: #0a0a0a;
@@ -81,13 +82,14 @@
 }
 
 .projectCategory {
-    background: rgba(26, 26, 26, 0.95);
+    background: rgba(0, 0, 0, 0.85);
     padding: 0.5rem 1rem;
     border-radius: var(--radius-full);
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--primary);
+    color: #ffffff;
     box-shadow: var(--shadow-md);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .projectContent {
@@ -114,11 +116,12 @@
 
 .tag {
     padding: 0.375rem 0.875rem;
-    background: var(--surface);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: var(--radius-full);
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--primary);
+    color: #ffffff;
 }
 
 .statsSection {

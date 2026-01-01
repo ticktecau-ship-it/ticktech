@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://tictacdigital.com'
+    const baseUrl = 'https://ticktec.com.au'
 
     // Static pages
     const staticPages = [

@@ -234,7 +234,7 @@ export const emailTemplates = {
               </div>
 
               <div class="footer-text">
-                <p>📧 <a href="mailto:ticktec.au@gmail.com" style="color: #00E5FF; text-decoration: none;">ticktec.au@gmail.com</a></p>
+                <p>📧 <a href="mailto:team@ticktec.com.au" style="color: #00E5FF; text-decoration: none;">team@ticktec.com.au</a></p>
                 <p style="margin-top: 15px;">© ${new Date().getFullYear()} TickTec Digital Solutions. All rights reserved.</p>
               </div>
             </div>

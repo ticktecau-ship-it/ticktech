@@ -5,9 +5,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         userAgent: '*',
-        disallow: '/',
+        allow: '/',
       },
     ],
-    sitemap: 'https://tictacdigital.com/sitemap.xml',
+    sitemap: 'https://ticktec.com.au/sitemap.xml',
   }
 }

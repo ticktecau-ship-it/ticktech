@@ -34,7 +34,7 @@ export default function ContactForm() {
                 },
                 body: JSON.stringify({
                     type: 'contact',
-                    to: 'ticktec.au@gmail.com',
+                    to: 'team@ticktec.com.au',
                     name: formData.name,
                     email: formData.email,
                     phone: formData.phone,
@@ -118,7 +118,7 @@ export default function ContactForm() {
                     value={formData.phone}
                     onChange={handleChange}
                     className={styles.input}
-                    placeholder="+1 (234) 567-890"
+                    placeholder="+61 450 046 310"
                 />
             </div>
 
@@ -169,7 +169,7 @@ export default function ContactForm() {
 
             {status === 'error' && (
                 <div className={styles.errorMessage}>
-                    ✗ Failed to send message. Please try again or email us directly at ticktec.au@gmail.com
+                    ✗ Failed to send message. Please try again or email us directly at team@ticktec.com.au
                 </div>
             )}
 

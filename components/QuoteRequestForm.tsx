@@ -61,7 +61,7 @@ export default function QuoteRequestForm() {
                 },
                 body: JSON.stringify({
                     type: 'quote',
-                    to: 'ticktec.au@gmail.com',
+                    to: 'team@ticktec.com.au',
                     ...formData,
                 }),
             });

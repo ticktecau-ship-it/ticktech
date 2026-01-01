@@ -4,23 +4,23 @@ import './globals.css'
 
 export const metadata: Metadata = {
     title: {
-        default: 'Tic Tac Digital Solution | Digital Agency',
-        template: '%s | Tic Tac Digital Solution'
+        default: 'TickTec Digital Solution | Digital Agency',
+        template: '%s | TickTec Digital Solution'
     },
-    description: 'Transform your digital presence with Tic Tac Digital Solution. Expert web development, SEO, digital marketing, and branding services.',
+    description: 'Transform your digital presence with TickTec Digital Solution. Expert web development, SEO, digital marketing, and branding services.',
     keywords: ['digital agency', 'web development', 'SEO', 'digital marketing', 'branding', 'content writing', 'domain hosting'],
-    authors: [{ name: 'Tic Tac Digital Solution' }],
+    authors: [{ name: 'TickTec Digital Solution' }],
     openGraph: {
         type: 'website',
         locale: 'en_US',
-        url: 'https://tictacdigital.com',
-        siteName: 'Tic Tac Digital Solution',
-        title: 'Tic Tac Digital Solution | Digital Agency',
+        url: 'https://ticktec.com.au',
+        siteName: 'TickTec Digital Solution',
+        title: 'TickTec Digital Solution | Digital Agency',
         description: 'Transform your digital presence with expert digital solutions.',
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'Tic Tac Digital Solution | Digital Agency',
+        title: 'TickTec Digital Solution | Digital Agency',
         description: 'Transform your digital presence with expert digital solutions.',
     },
     robots: {
