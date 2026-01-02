@@ -163,7 +163,7 @@ export default function Footer() {
                                     </svg>
                                 </span>
                                 <span className={styles.contactText}>
-                                    123 Digital Street, Tech City
+                                    7 Jermyn Street, Fraser Rise VIC 3336
                                 </span>
                             </li>
                         </ul>
